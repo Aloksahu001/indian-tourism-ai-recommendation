@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login | Indian Tourism ML</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="auth-bg">
+
+<div class="auth-card">
+    <h2>Welcome Back</h2>
+
+    {% if error %}
+    <p style="color:red; margin-bottom:10px;">
+        {{ error }}
+    </p>
+    {% endif %}
+
+    <form method="post">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button class="main-btn">Login</button>
+    </form>
+
+    <p>New user? <a href="/signup">Create account</a></p>
+</div>
+
+</body>
+</html>

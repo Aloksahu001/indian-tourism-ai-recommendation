@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel | Indian Tourism ML</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Admin Panel</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<!-- MAIN CONTAINER -->
+<div class="admin-container">
+
+    <h2>Registered Users</h2>
+    <p class="admin-sub">Manage all users of the Tourism ML Platform</p>
+
+    <div class="table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for u in users %}
+                <tr>
+                    <td>{{ u[0] }}</td>
+                    <td>{{ u[1] }}</td>
+                    <td>{{ u[2] }}</td>
+                    <td>
+                        {% if u[3] == 'admin' %}
+                            <span class="role admin">Admin</span>
+                        {% else %}
+                            <span class="role user">User</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Results | Indian Tourism ML</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">✨ Recommended Places</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/chatbot">Chatbot</a>
+    </div>
+</nav>
+
+<div class="result-container">
+{% for row in tables %}
+    <div class="result-card">
+        <h3>{{ row.Place_Name }}</h3>
+        <p><b>State:</b> {{ row.State }}</p>
+        <p><b>Best Time:</b> {{ row.Best_Time_To_Visit }}</p>
+        <p><b>Famous For:</b> {{ row.Famous_For }}</p>
+
+        <iframe
+            src="https://www.google.com/maps?q={{ row.Place_Name }} India&output=embed">
+        </iframe>
+    </div>
+{% endfor %}
+</div>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommended Places</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="result-bg">
+
+<div class="result-wrapper">
+    <h2 class="result-title">✨ Recommended Places for You</h2>
+
+    {% if places %}
+        <div class="result-grid">
+        {% for p in places %}
+            <div class="place-card">
+                <div class="place-header">
+                    <h3>{{ p.Place_Name }}</h3>
+                    <span class="state">{{ p.State }}</span>
+                </div>
+
+                <p><b>Best Time:</b> {{ p.Best_Time_To_Visit }}</p>
+                <p><b>Famous For:</b> {{ p.Famous_For }}</p>
+
+                <!-- 🌍 GOOGLE MAP (STABLE ZOOM) -->
+                <iframe
+                    src="https://www.google.com/maps?q={{ p.Place_Name }} {{ p.State }}&z=14&output=embed"
+                    loading="lazy">
+                </iframe>
+
+                <!-- 🔗 OPEN FULL GOOGLE MAP -->
+                <a
+                    href="https://www.google.com/maps/search/{{ p.Place_Name }} {{ p.State }}"
+                    target="_blank"
+                    class="map-link">
+                    Open in Google Maps
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-data">No recommendations found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

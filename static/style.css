@@ -1,0 +1,547 @@
+/* /* ==================================================
+   RESET + GLOBAL
+================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #f4f7fb;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ==================================================
+   NAVBAR
+================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 40px;
+    background: #1f3c88;
+    color: #fff;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* ==================================================
+   HOME – HERO
+================================================== */
+.hero {
+    text-align: center;
+    padding: 70px 20px;
+    background: linear-gradient(135deg, #1f3c88, #3a6ff7);
+    color: #fff;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* ==================================================
+   HOME – CARD + FORM
+================================================== */
+.card {
+    max-width: 900px;
+    background: #fff;
+    margin: -45px auto 40px;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.form-grid label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.form-grid select {
+    width: 100%;
+    padding: 11px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* ==================================================
+   BUTTON (GLOBAL)
+================================================== */
+.main-btn {
+    background: #1f3c88;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.main-btn:hover {
+    background: #162c66;
+}
+
+/* Home page button grid fix */
+.form-grid .main-btn {
+    grid-column: span 2;
+}
+
+/* ==================================================
+   AUTH (LOGIN / SIGNUP) – PREMIUM
+================================================== */
+.auth-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1f3c88, #3a6ff7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card {
+    background: #fff;
+    padding: 42px;
+    width: 380px;
+    max-width: 92%;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.22);
+    animation: fadeUp 0.6s ease;
+}
+
+.auth-card h2 {
+    margin-bottom: 6px;
+}
+
+.auth-card p {
+    color: #666;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.auth-card form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    transition: border 0.2s;
+}
+
+.auth-card input:focus {
+    outline: none;
+    border-color: #1f3c88;
+}
+
+/* 🔥 MAIN FIX */
+.auth-card .main-btn {
+    width: 100%;
+    margin-top: 14px;
+    grid-column: unset !important;
+}
+
+/* Signup / Login messages */
+.auth-card .error {
+    background: #ffe6e6;
+    color: #c0392b;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.auth-card .success {
+    background: #e6ffea;
+    color: #1e8449;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.auth-card a {
+    color: #1f3c88;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-card a:hover {
+    text-decoration: underline;
+}
+
+/* ==================================================
+   CHATBOT
+================================================== */
+.chat-container {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+
+.chat-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.chat-form {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-form input {
+    flex: 1;
+    padding: 11px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.chat-reply {
+    margin-top: 20px;
+    padding: 15px;
+    background: #eef1ff;
+    border-radius: 8px;
+}
+
+/* ==================================================
+   RESULT PAGE
+================================================== 
+/* ================= RESULT PAGE BACKGROUND ================= */
+.result-bg {
+    min-height: 100vh;
+    padding: 40px 15px;
+    background: linear-gradient(
+        to bottom,
+        #1f3c88 0%,
+        #1f3c88 45%,
+        #f4f7fb 55%,
+        #ffffff 100%
+    );
+}
+
+/* ================= RESULT PAGE CONTENT ================= */
+.result-wrapper {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.result-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff; /* blue bg ke upar white */
+    font-size: 28px;
+}
+
+/* Grid */
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* Cards */
+.place-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.place-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+}
+
+/* Header */
+.place-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.place-header h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+.state {
+    background: #eef2ff;
+    color: #1f3c88;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Map */
+.place-card iframe {
+    width: 100%;
+    height: 220px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 12px;
+}
+
+
+*/
+/* ================= RESULT PAGE PREMIUM ================= */
+/* ================= RESULT PAGE HALF BLUE HALF WHITE ================= */
+/* ===== RESULT PAGE GRADIENT BG ===== */
+
+
+
+/* Empty */
+.no-data {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .result-title {
+        font-size: 22px;
+    }
+}
+
+
+/* ==================================================
+   ADMIN PANEL
+================================================== */
+.admin-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+/* ==================================================
+   FOOTER
+================================================== */
+footer {
+    text-align: center;
+    padding: 18px;
+    color: #666;
+}
+
+/* ==================================================
+   ANIMATION
+================================================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid .main-btn {
+        grid-column: span 1;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+/* ==================================================
+   ULTRA PREMIUM SIGNUP (GLASS + INTERACTIONS)
+================================================== */
+/* ================= SIGNUP PAGE ONLY ================= */
+
+.signup-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1f3c88, #3a6ff7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-card {
+    background: #fff;
+    width: 360px;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.signup-card h2 {
+    margin-bottom: 6px;
+}
+
+.signup-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* form */
+.signup-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.signup-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.signup-group input {
+    width: 100%;
+    padding: 11px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.signup-group input:focus {
+    outline: none;
+    border-color: #1f3c88;
+}
+
+/* password eye */
+.password-group {
+    position: relative;
+}
+
+.toggle-eye {
+    position: absolute;
+    right: 10px;
+    top: 34px;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.toggle-eye:hover {
+    opacity: 1;
+}
+
+/* button */
+.signup-btn {
+    width: 100%;
+    background: #1f3c88;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.signup-btn:hover {
+    background: #162c66;
+}
+
+/* alerts */
+.signup-alert {
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.signup-alert.error {
+    background: #ffe6e6;
+    color: #c0392b;
+}
+
+.signup-alert.success {
+    background: #e6ffea;
+    color: #1e8449;
+}
+
+/* bottom text */
+.signup-bottom {
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.signup-bottom a {
+    color: #1f3c88;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signup-bottom a:hover {
+    text-decoration: underline;
+}
+
+
+.map-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #1f3c88;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.map-link:hover {
+    text-decoration: underline;
+}
