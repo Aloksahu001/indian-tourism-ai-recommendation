@@ -8,9 +8,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.neighbors import NearestNeighbors
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "fallback_key")
+app.secret_key = "super-secret-key-123"
 
-# ================= DATABASE (AUTO SWITCH) =================
+# ================= DATABASE =================
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 def get_db():
@@ -26,7 +26,6 @@ def init_db():
     cur = conn.cursor()
 
     try:
-        # PostgreSQL
         cur.execute("""
         CREATE TABLE IF NOT EXISTS users(
             id SERIAL PRIMARY KEY,
@@ -37,7 +36,6 @@ def init_db():
         )
         """)
     except:
-        # SQLite
         cur.execute("""
         CREATE TABLE IF NOT EXISTS users(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,8 +52,8 @@ def init_db():
 
 init_db()
 
-# ================= DATA + ML =================
-df = pd.read_csv("Indian_Tourism_ML_Big_Dataset.csv")
+# ================= DATA =================
+df = pd.read_csv(os.path.join(os.getcwd(), "Indian_Tourism_ML_Big_Dataset.csv"))
 
 encoders = {}
 for col in ["Weather", "Crowd_Level", "Tourism_Type", "Budget_Level"]:
@@ -67,49 +65,10 @@ X = df[["Weather", "Crowd_Level", "Tourism_Type", "Budget_Level"]]
 model = NearestNeighbors(n_neighbors=5)
 model.fit(X)
 
-# ================= HOME =================
+# ================= ROOT =================
 @app.route("/")
-def index():
-    return render_template("index.html")
-
-# ================= SIGNUP =================
-@app.route("/signup", methods=["GET", "POST"])
-def signup():
-    error = None
-    success = None
-
-    if request.method == "POST":
-        u = request.form["username"]
-        e = request.form["email"]
-        p = request.form["password"]
-
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", e):
-            error = "Invalid email format"
-        else:
-            try:
-                conn = get_db()
-                cur = conn.cursor()
-
-                if DATABASE_URL:
-                    cur.execute(
-                        "INSERT INTO users(username,email,password) VALUES(%s,%s,%s)",
-                        (u, e, generate_password_hash(p))
-                    )
-                else:
-                    cur.execute(
-                        "INSERT INTO users(username,email,password) VALUES(?,?,?)",
-                        (u, e, generate_password_hash(p))
-                    )
-
-                conn.commit()
-                cur.close()
-                conn.close()
-                success = "Account created successfully!"
-
-            except Exception:
-                error = "Username or Email already exists"
-
-    return render_template("signup.html", error=error, success=success)
+def root():
+    return redirect(url_for("login"))
 
 # ================= LOGIN =================
 @app.route("/login", methods=["GET", "POST"])
@@ -133,19 +92,33 @@ def login():
         conn.close()
 
         if user and check_password_hash(user[3], p):
+            session.clear()
             session["user"] = u
             session["role"] = user[4]
-            return redirect("/")
+            return redirect("/dashboard")
         else:
             error = "Invalid login credentials"
 
     return render_template("login.html", error=error)
+
+# ================= DASHBOARD =================
+@app.route("/dashboard")
+def dashboard():
+    if "user" not in session:
+        return redirect(url_for("login"))
+    return render_template("index.html")
 
 # ================= LOGOUT =================
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("login"))
+
+# ================= SIGNUP =================
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    return render_template("signup.html")
+
 
 # ================= ADMIN =================
 @app.route("/admin")
