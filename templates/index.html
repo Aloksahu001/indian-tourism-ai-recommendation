@@ -1,0 +1,128 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Indian Tourism ML App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<h1>🇮🇳 Indian Tourism Recommendation</h1>
+
+<form action="/recommend" method="post">
+    <select name="weather">
+        <option>Pleasant</option>
+        <option>Cold</option>
+        <option>Warm</option>
+    </select>
+
+    <select name="crowd">
+        <option>Low</option>
+        <option>Moderate</option>
+        <option>High</option>
+    </select>
+
+    <select name="tourism">
+        <option>Hill Station</option>
+        <option>Beach</option>
+        <option>Religious</option>
+        <option>Historical</option>
+        <option>City</option>
+    </select>
+
+    <select name="budget">
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+    </select>
+
+    <button type="submit">Recommend Places</button>
+</form>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Indian Tourism ML</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">🇮🇳 Indian Tourism ML</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/chatbot">Chatbot</a>
+        <a href="/login">Login</a>
+        <a href="/signup" class="btn">Signup</a>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>Explore India Smartly 🌍</h1>
+    <p>ML-based Tourism Recommendation System</p>
+</section>
+
+<!-- FORM CARD -->
+<section class="card">
+    <h2>Find Your Perfect Destination</h2>
+
+    <form action="/recommend" method="post" class="form-grid">
+
+        <div>
+            <label>Weather Preference</label>
+            <select name="weather">
+                <option>Pleasant</option>
+                <option>Cold</option>
+                <option>Warm</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Crowd Level</label>
+            <select name="crowd">
+                <option>Low</option>
+                <option>Moderate</option>
+                <option>High</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Tourism Type</label>
+            <select name="tourism">
+                <option>Hill Station</option>
+                <option>Beach</option>
+                <option>Religious</option>
+                <option>Historical</option>
+                <option>City</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Budget</label>
+            <select name="budget">
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+            </select>
+        </div>
+
+        <button type="submit" class="main-btn">
+            Recommend Places
+        </button>
+
+    </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 Indian Tourism ML Project | Built with ❤️ & ML</p>
+</footer>
+
+</body>
+</html>
+
