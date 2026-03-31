@@ -4,3 +4,4 @@ scikit-learn==1.5.1
 Werkzeug==3.0.3
 psycopg2-binary
 python-dotenv
+python-3.10.13
