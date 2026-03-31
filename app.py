@@ -1,31 +1,55 @@
+
 from flask import Flask, render_template, request, redirect, session, url_for
 import pandas as pd
-import sqlite3
+import os
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from sklearn.preprocessing import LabelEncoder
 from sklearn.neighbors import NearestNeighbors
 
 app = Flask(__name__)
-app.secret_key = "tourism_secret_key"
+app.secret_key = os.environ.get("SECRET_KEY", "fallback_key")
 
-# ================= DATABASE =================
+# ================= DATABASE (AUTO SWITCH) =================
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
 def get_db():
-    return sqlite3.connect("users.db", timeout=10, check_same_thread=False)
+    if DATABASE_URL:
+        import psycopg2
+        return psycopg2.connect(DATABASE_URL)
+    else:
+        import sqlite3
+        return sqlite3.connect("users.db")
 
 def init_db():
     conn = get_db()
-    c = conn.cursor()
-    c.execute("""
-    CREATE TABLE IF NOT EXISTS users(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE,
-        email TEXT UNIQUE,
-        password TEXT,
-        role TEXT DEFAULT 'user'
-    )
-    """)
+    cur = conn.cursor()
+
+    try:
+        # PostgreSQL
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS users(
+            id SERIAL PRIMARY KEY,
+            username TEXT UNIQUE,
+            email TEXT UNIQUE,
+            password TEXT,
+            role TEXT DEFAULT 'user'
+        )
+        """)
+    except:
+        # SQLite
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS users(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE,
+            email TEXT UNIQUE,
+            password TEXT,
+            role TEXT DEFAULT 'user'
+        )
+        """)
+
     conn.commit()
+    cur.close()
     conn.close()
 
 init_db()
@@ -64,16 +88,26 @@ def signup():
         else:
             try:
                 conn = get_db()
-                c = conn.cursor()
-                c.execute(
-                    "INSERT INTO users(username,email,password) VALUES(?,?,?)",
-                    (u, e, generate_password_hash(p))
-                )
+                cur = conn.cursor()
+
+                if DATABASE_URL:
+                    cur.execute(
+                        "INSERT INTO users(username,email,password) VALUES(%s,%s,%s)",
+                        (u, e, generate_password_hash(p))
+                    )
+                else:
+                    cur.execute(
+                        "INSERT INTO users(username,email,password) VALUES(?,?,?)",
+                        (u, e, generate_password_hash(p))
+                    )
+
                 conn.commit()
+                cur.close()
                 conn.close()
-                success = "Account created successfully! Please login."
-            except sqlite3.IntegrityError:
-                error = " Username or Email already exists"
+                success = "Account created successfully!"
+
+            except Exception:
+                error = "Username or Email already exists"
 
     return render_template("signup.html", error=error, success=success)
 
@@ -87,9 +121,15 @@ def login():
         p = request.form["password"]
 
         conn = get_db()
-        c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE username=?", (u,))
-        user = c.fetchone()
+        cur = conn.cursor()
+
+        if DATABASE_URL:
+            cur.execute("SELECT * FROM users WHERE username=%s", (u,))
+        else:
+            cur.execute("SELECT * FROM users WHERE username=?", (u,))
+
+        user = cur.fetchone()
+        cur.close()
         conn.close()
 
         if user and check_password_hash(user[3], p):
@@ -97,7 +137,7 @@ def login():
             session["role"] = user[4]
             return redirect("/")
         else:
-            error = " Invalid login credentials"
+            error = "Invalid login credentials"
 
     return render_template("login.html", error=error)
 
@@ -111,12 +151,15 @@ def logout():
 @app.route("/admin")
 def admin():
     if session.get("role") != "admin":
-        return "Access Denied "
+        return "Access Denied"
 
     conn = get_db()
-    c = conn.cursor()
-    c.execute("SELECT id, username, email, role FROM users")
-    users = c.fetchall()
+    cur = conn.cursor()
+
+    cur.execute("SELECT id, username, email, role FROM users")
+    users = cur.fetchall()
+
+    cur.close()
     conn.close()
 
     return render_template("admin.html", users=users)
@@ -127,12 +170,13 @@ def chatbot():
     reply = ""
     if request.method == "POST":
         msg = request.form["msg"].lower()
+
         if "beach" in msg:
             reply = "Goa, Varkala, Baga Beach are great beach destinations."
         elif "hill" in msg:
             reply = "Manali, Ooty, Munnar are famous hill stations."
         elif "religious" in msg:
-            reply = "Varanasi, Tirupati, Amritsar are famous religious places."
+            reply = "Varanasi, Tirupati, Amritsar, Mahakaleshwar are famous religious places."
         else:
             reply = "Ask about beach, hill or religious tourism."
 
@@ -164,4 +208,5 @@ def recommend():
 
 # ================= RUN =================
 if __name__ == "__main__":
-    app.run(debug=True, threaded=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
