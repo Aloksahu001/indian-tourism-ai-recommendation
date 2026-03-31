@@ -224,7 +224,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "fallback_key")
 
 # ================= DATABASE (AUTO SWITCH) =================
-DATABASE_URL = os.environ.get("tourism_db_6m3j")
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 def get_db():
     if DATABASE_URL:
