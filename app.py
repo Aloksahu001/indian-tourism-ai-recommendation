@@ -7,8 +7,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sklearn.preprocessing import LabelEncoder
 from sklearn.neighbors import NearestNeighbors
 
+port = int(os.environ.get("PORT", 8080))
+app.run(host="0.0.0.0", port=port)
+
+
 app = Flask(__name__)
-app.secret_key = "super-secret-key-123"
+app.secret_key = "SECRET_KEY"
 
 # ================= DATABASE =================
 DATABASE_URL = os.environ.get("DATABASE_URL")
