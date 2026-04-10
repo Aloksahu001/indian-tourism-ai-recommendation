@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -39,6 +39,65 @@
         </div>
 
         <button class="signup-btn">Create Account</button>
+    </form>
+
+    <p class="signup-bottom">
+        Already have an account? <a href="/login">Login</a>
+    </p>
+</div>
+
+<script>
+function togglePwd() {
+    const p = document.getElementById("pwd");
+    p.type = p.type === "password" ? "text" : "password";
+}
+</script>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup | Indian Tourism</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="signup-bg">
+
+<div class="signup-card">
+    <h2>Create Account</h2>
+    <p class="signup-subtitle">Join to explore India smartly</p>
+
+    {% if error %}
+    <div class="signup-alert error">{{ error }}</div>
+    {% endif %}
+
+    {% if success %}
+    <div class="signup-alert success">{{ success }}</div>
+    {% endif %}
+
+    <!-- 🔥 IMPORTANT CHANGE HERE -->
+    <form action="/signup" method="POST">
+
+        <div class="signup-group">
+            <label>Username</label>
+            <input type="text" name="username" required>
+        </div>
+
+        <div class="signup-group">
+            <label>Email</label>
+            <input type="email" name="email" required>
+        </div>
+
+        <div class="signup-group password-group">
+            <label>Password</label>
+            <input type="password" name="password" id="pwd" required>
+            <span class="toggle-eye" onclick="togglePwd()">👁</span>
+        </div>
+
+        <!-- 🔥 type="submit" add kiya -->
+        <button type="submit" class="signup-btn">Create Account</button>
     </form>
 
     <p class="signup-bottom">
